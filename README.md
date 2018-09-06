@@ -1,4 +1,4 @@
-# MoM Perf Environment
+# Containerised Wordpress on ECS 
 This template can be used to launch on-demand Wordpress application in AWS ECS.
 
 # What this template will do
