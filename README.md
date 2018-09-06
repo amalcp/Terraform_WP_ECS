@@ -31,8 +31,8 @@ $ terraform --version
 
 Run the following `terraform plan` command is used to create an execution plan:
 ```sh
-$ git clone git@github.com:amalcp/Terrsform_WP_ECS.git
-$ cd Terrsform_WP_ECS
+$ git clone git@github.com:amalcp/Terraform_WP_ECS.git
+$ cd Terraform_WP_ECS
 $ terraform plan -var db_pass=<strong_rds_pass> -var key_name=<existing_ec2_key_name>
 ```
 # Build
@@ -42,9 +42,9 @@ $ terraform plan -var db_pass=<strong_rds_pass> -var key_name=<existing_ec2_key_
 $ terraform apply -var db_pass=<strong_rds_pass> -var key_name=<existing_ec2_key_name
 ```
 
-# terraform.tfstate
-
-After running `terraform apply`, the terraform will create an additional file called `terraform.tfstate` for future reference. Please DO NOT DELETE IT MANUALLY.
+# Browse the wordpress blog!
+Copy the `elb_hostname` from the out put section & past on your browser.
+Done! 
 
 ### Deleting the stack
 
