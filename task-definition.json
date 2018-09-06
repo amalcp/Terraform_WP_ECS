@@ -1,0 +1,36 @@
+
+[
+  {
+    "cpu": 256,
+    "essential": true,
+    "image": "${image_url}",
+    "memory": 256,
+    "name": "${container_name}",
+    "portMappings": [
+      {
+        "containerPort": 80,
+        "hostPort": 0
+      }
+    ],
+    "environment": [
+      {
+      "name": "WORDPRESS_DB_HOST",
+      "value": "${db_host}"
+      },
+      {
+      "name": "WORDPRESS_DB_USER",
+      "value": "${db_user}"
+      },
+      {
+      "name": "WORDPRESS_DB_PASSWORD",
+      "value": "${db_pass}"    
+      }       ],  
+    "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+            "awslogs-group": "${log_group_name}",
+            "awslogs-region": "${log_group_region}"
+        }
+    }
+  }
+]
