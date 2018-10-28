@@ -277,6 +277,7 @@ data "template_file" "task_definition" {
 resource "aws_ecs_task_definition" "taskdef" {
   family                = "${aws_ecs_cluster.main.name}"
   container_definitions = "${data.template_file.task_definition.rendered}"
+  network_mode = "awsvpc"
 }
 
 resource "aws_ecs_service" "ecsserv" {
@@ -284,7 +285,7 @@ resource "aws_ecs_service" "ecsserv" {
   cluster                            = "${aws_ecs_cluster.main.id}"
   task_definition                    = "${aws_ecs_task_definition.taskdef.arn}"
   desired_count                      = "${var.num_container}"
-  iam_role                           = "${aws_iam_role.ecs_service.name}"
+  #iam_role                           = "${aws_iam_role.ecs_service.name}"
   deployment_minimum_healthy_percent = "${var.deployment_minimum_healthy_percent}"
   deployment_maximum_percent         = "${var.deployment_maximum_percent}"
   health_check_grace_period_seconds  = 120
@@ -295,10 +296,13 @@ resource "aws_ecs_service" "ecsserv" {
     container_port   = "${var.container_port}"
   }
 
-  depends_on = [
-    "aws_iam_role_policy.ecs_service",
-    "aws_alb_listener.front_end",
-  ]
+  network_configuration {
+    security_groups = ["${aws_security_group.instance_sg.id}"]
+    subnets         = ["${aws_subnet.main.*.id}"]
+  }
+
+depends_on = ["aws_alb_listener.front_end"]
+ 
 }
 
 resource "aws_appautoscaling_target" "ecs_target" {
@@ -447,6 +451,7 @@ resource "aws_alb_target_group" "trgtgrp" {
   port                 = 80
   protocol             = "HTTP"
   vpc_id               = "${aws_vpc.main.id}"
+  target_type          = "ip"
   deregistration_delay = 180
 
   health_check {
