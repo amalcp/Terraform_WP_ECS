@@ -1,3 +1,8 @@
+<p align="center"> 
+<img src="./imgs/tf_aws_ecs.png">
+</p>
+
+
 # Containerised Wordpress on ECS 
 This template can be used to launch on-demand Wordpress application in AWS ECS.
 
